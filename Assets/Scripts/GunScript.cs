@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,22 +12,67 @@ public class GunScript : MonoBehaviour
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
     public float impactForce = 30f;
+    public AudioSource gunSource;
+    public int maxAmmo = 10;
+    public int currentAmmo =10;
+    public float reloadTime = 1f;
+    private bool isReloading = false;
+    public Animator Gunanimator;
   //  [SerializeField] Joystick gunJoystick;
     [SerializeField] Button buttonShoot;
     // Update is called once per frame
-    void Update()
+
+    
+    void Start()
     {
-       // buttonShoot.onClick.AddListener(TaskOnClick);
-     
+        if (currentAmmo == -1)
+        {
+            currentAmmo = maxAmmo;
+        }
     }
 
-    private void TaskOnClick()
+    void OnEnable()
     {
-        Shoot();
+        
+        if (currentAmmo == -1)
+        {
+            currentAmmo = maxAmmo;
+        }
+        isReloading = false;
+        Gunanimator.SetBool("Reloading", false);
+        
+    }
+   
+
+    
+
+    private IEnumerator Reload()
+    {
+
+        isReloading = true;
+        Gunanimator.SetBool("Reloading", true);
+        yield return new WaitForSeconds(reloadTime - 0.25f);
+        Gunanimator.SetBool("Reloading", false);
+       // yield return new WaitForSeconds(0.25f);
+        currentAmmo = maxAmmo;
+        isReloading = false;
     }
 
     public void Shoot()
     {
+        if (isReloading)
+        {
+            return;
+        }
+        currentAmmo--;
+        if (currentAmmo <= 0)
+        {
+            if (gameObject.activeSelf)
+            {
+                StartCoroutine(Reload());
+                return;
+            }
+        }
         muzzleFlash.Play();
         RaycastHit hit;
         // shoot direction in we're facing fpscam.transform.forward
@@ -45,6 +91,7 @@ public class GunScript : MonoBehaviour
             {
                 hit.rigidbody.AddForce(-hit.normal * impactForce);
             }
+            gunSource.Play();
         }
     }
 }
