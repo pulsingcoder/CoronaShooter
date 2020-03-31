@@ -13,7 +13,7 @@ public class Observer : MonoBehaviour
         if (other.gameObject.transform == m_player)
         {
             isPlayerInRange = true;
-            SceneManager.LoadScene(1);
+           
         }
     }
     void OnTriggerExit(Collider other)
@@ -33,18 +33,20 @@ public class Observer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 direction = m_player.position - transform.position + Vector3.up;
-        Ray ray = new Ray(transform.position, direction);
-        RaycastHit raycastHit;
-        if (Physics.Raycast(ray, out raycastHit))
+        if (isPlayerInRange)
         {
-            if (raycastHit.collider.transform == m_player)
+            Vector3 direction = m_player.position - transform.position + Vector3.up;
+            Ray ray = new Ray(transform.position, direction);
+            RaycastHit raycastHit;
+            if (Physics.Raycast(ray, out raycastHit))
             {
-               
-                SceneManager.LoadScene(1);
+                if (raycastHit.collider.transform == m_player)
+                {
+
+                    SceneManager.LoadScene(1);
+                }
             }
         }
-
         
     }
 }
