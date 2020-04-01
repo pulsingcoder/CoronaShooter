@@ -5,11 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class FPSConroller : MonoBehaviour
 {
+    private const float maxHealth = 20f;
+    private float currentHealth = 0f;
+
     public CharacterController controller;
     public float speed = 12f;
     [SerializeField] Joystick m_joystick;
 
     // Update is called once per frame
+    void Start()
+    {
+        currentHealth = maxHealth;
+    }
     void Update()
     {
         float horizontal = m_joystick.Horizontal;
@@ -20,6 +27,7 @@ public class FPSConroller : MonoBehaviour
         Vector3 temp = controller.transform.localPosition;
         temp.y = 0;
         controller.transform.localPosition = temp;
+        
     }
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
@@ -30,5 +38,15 @@ public class FPSConroller : MonoBehaviour
         }
        
     }
+
+    public void HurtMe(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <=0)
+        {
+            SceneManager.LoadScene(1);
+        }
+    }
+
 
 }

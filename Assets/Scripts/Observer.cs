@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,7 +8,8 @@ public class Observer : MonoBehaviour
 {
     public Transform m_player;
     bool isPlayerInRange;
-
+    public float damage  = 5f;
+    public float impactForce = 100f;
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.transform == m_player)
@@ -43,10 +45,20 @@ public class Observer : MonoBehaviour
                 if (raycastHit.collider.transform == m_player)
                 {
 
-                    SceneManager.LoadScene(1);
+                    m_player.GetComponent<FPSConroller>().HurtMe(damage);
+                    ApplyForce(raycastHit);
                 }
             }
         }
         
+    }
+
+    private void ApplyForce(RaycastHit raycastHit)
+    {
+        Rigidbody m_rigidBody = GetComponent<Rigidbody>();
+        if (m_rigidBody != null)
+        {
+            m_rigidBody.AddForce(raycastHit.normal * impactForce);
+        }
     }
 }
