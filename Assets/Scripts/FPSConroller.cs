@@ -19,14 +19,12 @@ public class FPSConroller : MonoBehaviour
     }
     void Update()
     {
-        float horizontal = m_joystick.Horizontal;
+        float horizontal = Mathf.Abs(m_joystick.Horizontal);
         float vertical = Mathf.Abs(m_joystick.Vertical);
 
         Vector3 move = transform.right * horizontal + transform.forward * vertical;
         controller.Move(move * speed * Time.deltaTime);
-        Vector3 temp = controller.transform.localPosition;
-        temp.y = 0;
-        controller.transform.localPosition = temp;
+   
         
     }
     void OnControllerColliderHit(ControllerColliderHit hit)

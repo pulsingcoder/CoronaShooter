@@ -73,6 +73,7 @@ public class GunScript : MonoBehaviour
                 return;
             }
         }
+        if (muzzleFlash != null)
         muzzleFlash.Play();
         RaycastHit hit;
         // shoot direction in we're facing fpscam.transform.forward
