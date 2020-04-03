@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class GunScript : MonoBehaviour
 {
     public float damage = 10f;
-    public float range = 100f;
-    public Camera fpsCam;
+    public float range = 200f;
+    public GameObject fpsCam;
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
     public float impactForce = 30f;
@@ -76,10 +76,13 @@ public class GunScript : MonoBehaviour
         if (muzzleFlash != null)
         muzzleFlash.Play();
         RaycastHit hit;
+        Debug.DrawRay(fpsCam.transform.position,fpsCam.transform.forward);
+        
+       
         // shoot direction in we're facing fpscam.transform.forward
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
-
+            print(hit.transform.name);
             Enemy enemy = hit.transform.GetComponent<Enemy>();
             if (enemy !=null)
             {
