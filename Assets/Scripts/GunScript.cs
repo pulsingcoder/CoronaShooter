@@ -8,7 +8,7 @@ public class GunScript : MonoBehaviour
 {
     public float damage = 10f;
     public float range = 200f;
-    public GameObject fpsCam;
+    public Camera fpsCam;
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
     public float impactForce = 30f;
@@ -18,6 +18,7 @@ public class GunScript : MonoBehaviour
     public float reloadTime = 1f;
     private bool isReloading = false;
     public Animator Gunanimator;
+    LineRenderer line;
   //  [SerializeField] Joystick gunJoystick;
     [SerializeField] Button buttonShoot;
     // Update is called once per frame
@@ -29,6 +30,7 @@ public class GunScript : MonoBehaviour
         {
             currentAmmo = maxAmmo;
         }
+        line = new LineRenderer();
     }
 
     void OnEnable()
@@ -76,8 +78,8 @@ public class GunScript : MonoBehaviour
         if (muzzleFlash != null)
         muzzleFlash.Play();
         RaycastHit hit;
-        Debug.DrawRay(fpsCam.transform.position,fpsCam.transform.forward);
-        
+        Debug.DrawRay(fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f)), fpsCam.transform.forward);
+     
        
         // shoot direction in we're facing fpscam.transform.forward
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
