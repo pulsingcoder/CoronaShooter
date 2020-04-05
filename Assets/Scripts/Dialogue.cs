@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class RifleFollower : MonoBehaviour
+[System.Serializable]
+public class Dialogue 
 {
-    [SerializeField] Transform target;
+    [TextArea(3,10)]
+    public string[] sentences;
+    public string name;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +17,6 @@ public class RifleFollower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = target.position;
+        
     }
 }

@@ -23,10 +23,10 @@ public class WayPointPatrol : MonoBehaviour
             currentWayPointIndex = (currentWayPointIndex + 1) % waypoints.Length;
             navMeshAgent.SetDestination(waypoints[currentWayPointIndex].position);
         }
-        float distance = Vector3.Distance(transform.position, player.position);
+     /*   float distance = Vector3.Distance(transform.position, player.position);
         if (distance < 3)
         {
             navMeshAgent.SetDestination(player.position);
-        }
+        }*/
     }
 }
