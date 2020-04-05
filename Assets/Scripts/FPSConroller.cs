@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class FPSConroller : MonoBehaviour
 {
+    AudioSource fps_Audio;
     private const float maxHealth = 20f;
     private float currentHealth = 0f;
 
@@ -16,6 +17,7 @@ public class FPSConroller : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        fps_Audio = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -24,6 +26,13 @@ public class FPSConroller : MonoBehaviour
 
         Vector3 move = transform.right * horizontal + transform.forward * vertical;
         controller.Move(move * speed * Time.deltaTime);
+        if (horizontal != 0 || vertical != 0)
+        {
+            if (!fps_Audio.isPlaying)
+            {
+                fps_Audio.Play();
+            }
+        }
    
         
     }
@@ -32,7 +41,7 @@ public class FPSConroller : MonoBehaviour
         
         if (hit.collider.gameObject.tag == "door")
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
        
     }
@@ -42,7 +51,7 @@ public class FPSConroller : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth <=0)
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
     }
 
