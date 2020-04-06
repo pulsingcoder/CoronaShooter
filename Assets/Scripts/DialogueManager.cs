@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
+    public AudioSource dialogueAudio;
     public Animator boxAnim;
     public GameObject endScene;
     public GameObject dialogNext;
@@ -33,6 +34,8 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplayNextSentence()
     {
+        if (!dialogueAudio.isPlaying)
+        dialogueAudio.Play();
         if (sentences.Count ==0)
         {
             EndDialog();

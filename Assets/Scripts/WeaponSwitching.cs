@@ -11,6 +11,7 @@ public class WeaponSwitching : MonoBehaviour
     void Start()
     {
         SelectWeapon();
+
     }
 
     private void SelectWeapon()
@@ -22,6 +23,9 @@ public class WeaponSwitching : MonoBehaviour
             {
                 weapon.gameObject.SetActive(true);
                 weapon.gameObject.transform.GetComponent<GunScript>().currentAmmo = 10;
+                int index = weapon.gameObject.transform.GetComponent<GunScript>().index;
+                weapon.gameObject.transform.GetComponent<GunScript>().currentInfection[index] = 9;
+                weapon.gameObject.transform.GetComponent<GunScript>().makeInfected();
             }
             else
             {

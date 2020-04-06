@@ -33,6 +33,10 @@ public class FPSConroller : MonoBehaviour
                 fps_Audio.Play();
             }
         }
+        else
+        {
+            fps_Audio.Stop();
+        }
    
         
     }

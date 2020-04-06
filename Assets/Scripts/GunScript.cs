@@ -6,6 +6,17 @@ using UnityEngine.UI;
 
 public class GunScript : MonoBehaviour
 {
+    [SerializeField]
+    public int index;
+    [SerializeField]
+    AudioClip scoreAudio;
+    [SerializeField]
+    AudioClip remindAudio;
+    int score = 0;
+    [SerializeField]
+    Text scoreText;
+    public Slider infectSlider;
+    private int maxInfection = 10;
     public float damage = 10f;
     public float range = 200f;
     public Camera fpsCam;
@@ -15,6 +26,7 @@ public class GunScript : MonoBehaviour
     public AudioSource gunSource;
     public int maxAmmo = 10;
     public int currentAmmo =10;
+    public int[] currentInfection = { 10, 10 };
     public float reloadTime = 1f;
     private bool isReloading = false;
     public Animator Gunanimator;
@@ -26,6 +38,7 @@ public class GunScript : MonoBehaviour
     
     void Start()
     {
+       
         if (currentAmmo == -1)
         {
             currentAmmo = maxAmmo;
@@ -67,6 +80,17 @@ public class GunScript : MonoBehaviour
             return;
         }
         currentAmmo--;
+
+        if (gameObject.activeSelf)
+        {
+            currentInfection[index]--;
+            makeInfected();
+            if (currentInfection[index] <= 2)
+            {
+                gunSource.PlayOneShot(remindAudio);
+            }
+            
+        }
         if (currentAmmo <= 0)
         {
             if (gameObject.activeSelf)
@@ -75,21 +99,34 @@ public class GunScript : MonoBehaviour
                 return;
             }
         }
+        if (currentInfection[0]<=0 || currentInfection[1] <= 0)
+        {
+            score -= 5;
+            scoreText.text = score.ToString();
+            gunSource.PlayOneShot(scoreAudio);
+        }
         if (muzzleFlash != null)
-        muzzleFlash.Play();
+        {
+            
+            
+                muzzleFlash.Play();
+            
+        }
         RaycastHit hit;
-        Debug.DrawRay(fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f)), fpsCam.transform.forward);
+       // Debug.DrawRay(fpsCam.transform.position, fpsCam.transform.forward);
      
        
         // shoot direction in we're facing fpscam.transform.forward
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
-            print(hit.transform.name);
+            
             Enemy enemy = hit.transform.GetComponent<Enemy>();
             if (enemy !=null)
             {
+                score += 10;
+                scoreText.text = score.ToString();
                 enemy.TakeDamage(damage);
-
+                gunSource.PlayOneShot(scoreAudio);
             }
             GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impactGo, 2f);
@@ -97,7 +134,19 @@ public class GunScript : MonoBehaviour
             {
                 hit.rigidbody.AddForce(-hit.normal * impactForce);
             }
-            gunSource.Play();
+            if (!gunSource.isPlaying)
+            {
+
+
+                gunSource.Play();
+            }
         }
+    }
+
+    public void makeInfected()
+    {
+        
+        float temp = (1.0f * (maxInfection - currentInfection[index])) / maxInfection;
+        infectSlider.value = temp;
     }
 }
