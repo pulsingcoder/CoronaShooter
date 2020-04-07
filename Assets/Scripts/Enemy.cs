@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
 {
     public Text coronaLeft;
     public float Health = 5f;
-    private int coronaCount = 7;
+    private int coronaCount = 9;
    
     public void TakeDamage(float amount)
     {
