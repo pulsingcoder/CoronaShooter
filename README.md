@@ -1,6 +1,6 @@
 # Corona Shooter
 
-![alt text](https://github.com/pulsingcoder/SpinnerTop-Multiplayer-AR/blob/master/WhatsApp%20Image%202020-11-07%20at%2014.04.04.jpeg)
+![alt text](https://www.yuvrajdarwani.tech/assets/img/cs_2.jpeg)
 
 Inspired from the message of "You are safer inside other than outside" during this pandemic situation lead me to develop a mobile game named "Corona Shooter".
 <BR>
