@@ -9,8 +9,9 @@ Inspired from the message of "You are safer inside other than outside" during th
 <BR>
 The game starts with the conversation between two brothers in which younger brother is scolding elder brother "why you went outside" as because of that corona enter in their home. Now the elder brother has quarantine himself and younger brother has to save the home.
 <BR>
+<BR>
 <B>Game Features : </B>
- <BR>
+<BR>
 1. The game requires a mobile's gyroscope for camera motion.
 2. If you allow GPS location you'll be awarded extra points based on how less your position is changing will playing.
 
